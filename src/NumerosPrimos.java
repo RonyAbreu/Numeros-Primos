@@ -1,20 +1,15 @@
-import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-
 public class NumerosPrimos {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Quantos números deseja inserir ?");
-        int quantNumeros = sc.nextInt();
-
-        ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(quantNumeros);
-        System.out.println("Digite os números: ");
-        for (int i = 0; i< quantNumeros; i++){
-             int numerosDaLista = sc.nextInt();
-             pool.execute(new Task(numerosDaLista));
+        if (args.length == 0) {
+            System.out.println("Insira a lista de inteiros!");
+            return;
         }
-        pool.shutdown();
+
+        for (String s : args) {
+            int numero = Integer.parseInt(s);
+            Thread thread = new Thread(new Task(numero));
+            thread.start();
+        }
     }
 }
